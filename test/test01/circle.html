@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<style type="text/css">
+		* {
+			padding: 0;
+			margin: 0;
+		}
+	</style>
+
+	<body>
+
+	</body>
+	<script type="text/javascript">
+		var circles = [];
+		//创建canvas
+		var canvas = document.createElement("canvas");
+		//设置宽高
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		//背景颜色变黑
+		canvas.style.background = "black";
+		//添加到网页中
+		document.body.appendChild(canvas);
+		var paint = canvas.getContext("2d");
+		setInterval(drawcircle, 1);
+		//setinterval
+
+		function drawcircle() {
+			//贝塞尔曲线
+			paint.clearRect(0, 0, window.innerWidth, window.innerHeight);
+			//新建一个圆对象
+			var c = new circle(window.innerWidth / 2, window.innerHeight / 2);
+			//把新建的圆存起来
+			circles.push(c);
+			for(var i = 0; i < 10; i++)
+			//更新每一个圆的坐标
+				circles[i].update();
+
+			//调用这个对象的方法
+		}
+		//创建一个圆'类'
+		function circle(x, y) {
+			this.x = x;
+			this.y = y;
+			this.xval = Math.random() * 10 - 5;
+			this.yval = Math.random() * 10 - 5;
+			this.gravity = 0;
+			this.update = function() {
+				/*		paint.fillStyle="aliceblue";#ffffff*/
+				var num = Math.random() * 16 * 16 * 16 * 16 * 16 * 16 - 1;
+				//取整数
+				num = Math.floor(num);
+
+				paint.fillStyle = "#" + num.toString(16);
+				paint.beginPath();
+				//随机一个宽度。Math.random()的区间是0-1不包括1 乘以窗口的宽度 就是0到窗口的宽度
+				/*		var x=Math.random()*window.innerWidth;
+						var y=Math.random()*window.innerHeight;*/
+				this.y = this.y + this.yval;
+				this.x = this.x + this.xval;
+				//改变的是y轴的变化量
+
+				if(this.y >= window.innerHeight) {
+					this.yval = -5;
+				}
+				if(this.y <= 0) {
+					this.yval = 5;
+				}
+				if(this.x <= 0) {
+					this.xval = 5;
+				}
+				if(this.x >= window.innerHeight) {
+					this.xval = -5;
+				}
+				paint.arc(this.x, this.y, 30, 0, 2 * Math.PI, false);
+				paint.closePath();
+				paint.fill();
+
+			}
+		}
+	</script>
+
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		var canvas = document.createElement('canvas');
+		canvas.height = window.innerHeight;
+		canvas.width = window.innerWidth;
+		canvas.style.backgroundColor='black';
+		document.body.appendChild(canvas);
+		
+		var paint= canvas = canvas.getContext("2d");
+		
+		paint.arc(window.innerWidth/2,window.innerHeight,30,0,2*Math.PI,false);
+		paint.closePath();
+		paint.fill();
+	</script>
+</html>

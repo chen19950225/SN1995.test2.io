@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script>
+			var c = [];
+			var canvas = document.createElement("canvas");
+			canvas.height = window.innerHeight;
+			canvas.width = window.innerWidth;
+			canvas.style.background = 'black';
+			document.body.appendChild(canvas);
+			var paint = canvas.getContext('2d');
+			setInterval(drawPic, 10);
+
+			function drawPic() {
+				paint.clearRect(0, 0, window.innerWidth, window.innerHeight);
+				var circle = new circles(window.innerWidth / 2, window.innerHeight / 2);
+				c.push(circle);
+				for(var i = 0; i < 20; i++) {
+					c[i].update();
+				}
+			}
+
+			function circles(x, y) {
+				this.x = x;
+				this.y = y;
+				this.moveX = Math.random() * 10 - 5;
+				this.moveY = Math.random() * 10 - 5;
+
+				this.update = function() {
+					var circleColor = Math.random() * 16 * 16 * 16 * 16 * 16 * 16 - 1;
+					circleColor = Math.floor(circleColor);
+					paint.fillStyle = "#" + circleColor.toString(16);
+					//丢弃当前的路径,绘制新的路径 beginPath
+					paint.beginPath();
+					this.x += this.moveX;
+					this.y += this.moveY;
+					//碰壁的时候反弹
+					if(this.y >= innerHeight) {
+						this.moveY = -5;
+					}
+					if(this.y <= 0) {
+						this.moveY = 5;
+					}
+					if(this.x <= 0) {
+						this.moveX = 5;
+					}
+					if(this.x >= innerWidth) {
+						this.moveX = -5;
+					}
+					paint.arc(this.x, this.y, 30, 0, 2 * Math.PI, false);
+					paint.closePath();
+					paint.fill();
+
+				}
+			}
+		</script>
+	</body>
+
+</html>
